@@ -31,24 +31,6 @@ parameters:
 			path: src/Auth/Models/User.php
 
 		-
-			message: '#^Call to function method_exists\(\) with \$this\(Winter\\Storm\\Auth\\Models\\User\) and ''getHashableAttribut…'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Auth/Models/User.php
-
-		-
-			message: '#^Call to function property_exists\(\) with \$this\(Winter\\Storm\\Auth\\Models\\User\) and ''attributeNames'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Auth/Models/User.php
-
-		-
-			message: '#^Call to function property_exists\(\) with \$this\(Winter\\Storm\\Auth\\Models\\User\) and ''customMessages'' will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/Auth/Models/User.php
-
-		-
 			message: '#^PHPDoc type array\<string\> of property Winter\\Storm\\Auth\\Models\\User\:\:\$hidden is not covariant with PHPDoc type list\<string\> of overridden property Illuminate\\Database\\Eloquent\\Model\:\:\$hidden\.$#'
 			identifier: property.phpDocType
 			count: 1
@@ -643,12 +625,6 @@ parameters:
 			path: src/Database/Relations/HasOneThrough.php
 
 		-
-			message: '#^Instanceof between \*NEVER\* and Winter\\Storm\\Database\\Relations\\HasManyThrough will always evaluate to false\.$#'
-			identifier: instanceof.alwaysFalse
-			count: 4
-			path: src/Database/Relations/HasOneThrough.php
-
-		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Relations\\Relation\:\:withDefault\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -901,42 +877,6 @@ parameters:
 			path: src/Database/Schema/Grammars/PostgresGrammar.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Support\\Fluent\:\:\$autoIncrement\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Database/Schema/Grammars/SQLiteGrammar.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Support\\Fluent\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 2
-			path: src/Database/Schema/Grammars/SQLiteGrammar.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Support\\Fluent\:\:\$storedAs\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Database/Schema/Grammars/SQLiteGrammar.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Support\\Fluent\:\:\$storedAsJson\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Database/Schema/Grammars/SQLiteGrammar.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Support\\Fluent\:\:\$virtualAs\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Database/Schema/Grammars/SQLiteGrammar.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Support\\Fluent\:\:\$virtualAsJson\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Database/Schema/Grammars/SQLiteGrammar.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Schema\\ColumnDefinition\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
@@ -959,6 +899,12 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: src/Database/TreeCollection.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Events/Dispatcher.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Routing\\Router\:\:after\(\)\.$#'
@@ -1021,7 +967,7 @@ parameters:
 			path: src/Support/Testing/Fakes/MailFake.php
 
 		-
-			message: '#^Parameter \#2 \$data \(array\) of method Winter\\Storm\\Support\\Testing\\Fakes\\MailFake\:\:queue\(\) should be compatible with parameter \$queue \(string\|null\) of method Illuminate\\Support\\Testing\\Fakes\\MailFake\:\:queue\(\)$#'
+			message: '#^Parameter \#2 \$data \(array\) of method Winter\\Storm\\Support\\Testing\\Fakes\\MailFake\:\:queue\(\) should be compatible with parameter \$queue \(BackedEnum\|string\|null\) of method Illuminate\\Support\\Testing\\Fakes\\MailFake\:\:queue\(\)$#'
 			identifier: method.childParameterType
 			count: 1
 			path: src/Support/Testing/Fakes/MailFake.php
