@@ -133,6 +133,33 @@ class ModelTest extends \Winter\Storm\Tests\DbTestCase
         $this->seeded['websites'][1]->users()->add($this->seeded['users'][1]);
     }
 
+    public function testSearchWhereExactHandlesExpressionColumns()
+    {
+        $grammar = Post::query()->getQuery()->getGrammar();
+        $relationColumn = DB::raw(sprintf(
+            '(select %s from %s where %s = %s)',
+            $grammar->wrap('users.name'),
+            $grammar->wrapTable('users'),
+            $grammar->wrap('users.id'),
+            $grammar->wrap('posts.user_id')
+        ));
+
+        $resultIds = Post::query()
+            ->searchWhere('User1', [$relationColumn], 'exact')
+            ->pluck('id')
+            ->all();
+
+        sort($resultIds);
+
+        $expectedIds = [
+            $this->seeded['posts'][0]->id,
+            $this->seeded['posts'][1]->id,
+        ];
+        sort($expectedIds);
+
+        $this->assertEquals($expectedIds, $resultIds);
+    }
+
     // tests hasOneThrough & hasManyThrough
     public function testDeleteWithThroughRelations()
     {
@@ -468,6 +495,35 @@ class ModelTest extends \Winter\Storm\Tests\DbTestCase
         $model->addCasts(['foo' => 'int']);
 
         $this->assertEquals(['id' => 'int', 'foo' => 'int'], $model->getCasts());
+    }
+
+    public function testAddDatesCasts()
+    {
+        $model = new TestModelGuarded();
+        $model->timestamps = false;
+
+        $model->addCasts([
+            'created_at' => 'date:Y/m/d',
+            'updated_at' => 'datetime:Y_m_d @ H:i',
+            'deleted_at' => 'date',
+        ]);
+
+        $model->created_at = '2025-10-31 22:50:55';
+        $model->updated_at = '2025-12-31 23:59:59';
+        $model->deleted_at = '2026-01-01 12:13:14';
+
+        $this->assertInstanceOf(\Winter\Storm\Argon\Argon::class, $model->created_at);
+        $this->assertInstanceOf(\Winter\Storm\Argon\Argon::class, $model->updated_at);
+        $this->assertInstanceOf(\Winter\Storm\Argon\Argon::class, $model->deleted_at);
+
+        $this->assertEquals(
+            [
+                'created_at' => '2025/10/31',
+                'updated_at' => '2025_12_31 @ 23:59',
+                'deleted_at' => '2026-01-01T00:00:00.000000Z',
+            ],
+            $model->attributesToArray()
+        );
     }
 
     public function testStringIsTrimmed()
