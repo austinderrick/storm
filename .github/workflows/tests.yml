@@ -13,16 +13,17 @@ concurrency:
 jobs:
   unitTests:
     strategy:
-      max-parallel: 4
+      max-parallel: 6
       matrix:
         operatingSystem: [ubuntu-latest, windows-latest]
-        phpVersion: ['8.2', '8.3', '8.4']
+        phpVersion: ['8.3', '8.4', '8.5']
       fail-fast: false
     runs-on: ${{ matrix.operatingSystem }}
     name: ${{ matrix.operatingSystem }} / PHP ${{ matrix.phpVersion }}
     env:
       extensions: curl, fileinfo, gd, mbstring, openssl, pdo, pdo_sqlite, sqlite3, xml, zip
       key: winter-storm-cache-v1.2
+      COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GITHUB_TOKEN }}"}}'
     steps:
       - name: Checkout changes
         uses: actions/checkout@v4
@@ -33,9 +34,6 @@ jobs:
           php-version: ${{ matrix.phpVersion }}
           extensions: ${{ env.extensions }}
           coverage: none
-
-      - name: Configure Composer GitHub token
-        run: composer config --global --auth github-oauth.github.com ${{ secrets.COMPOSER_GITHUB_TOKEN }}
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --no-progress --no-scripts
